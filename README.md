@@ -1,1 +1,184 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/53CzHyEu)
+
+Question 1 (The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.)
+
+import java.util.*;
+
+public class NextGreaterElement {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>(); // Map to store the next greater element for each number
+        Stack<Integer> stack = new Stack<>();       // Stack to find next greater elements
+
+        // Populate the map with next greater elements for nums2
+        for (int num : nums2) {
+            while (!stack.isEmpty() && stack.peek() < num) {
+                map.put(stack.pop(), num);
+            }
+            stack.push(num);
+        }
+
+        // Prepare the result array for nums1
+        int[] result = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            result[i] = map.getOrDefault(nums1[i], -1); // Retrieve next greater element or -1 if not found
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        NextGreaterElement solution = new NextGreaterElement();
+        
+        int[] nums1 = {4, 1, 2};
+        int[] nums2 = {1, 3, 4, 2};
+        
+        int[] result = solution.nextGreaterElement(nums1, nums2);
+        System.out.println(Arrays.toString(result)); // Output: [-1, 3, -1]
+    }
+}
+
+Question 2 (Develop a Java program showcasing the concept of inheritance. Create a base class and a derived class with appropriate methods and fields.)
+
+class Animal {
+
+    String name;
+
+
+    public Animal(String name) {
+        this.name = name;
+    }
+
+
+    public void eat() {
+        System.out.println(name + " is eating.");
+    }
+}
+
+class Dog extends Animal {
+
+    String breed;
+
+
+    public Dog(String name, String breed) {
+        super(name); // Call the constructor of the base class
+        this.breed = breed;
+    }
+
+    public void bark() {
+        System.out.println(name + " is barking.");
+    }
+}
+
+public class InheritanceDemo {
+    public static void main(String[] args) {
+        // Create an object of the base class
+        Animal animal = new Animal("Animal");
+        animal.eat();
+
+        Dog dog = new Dog("Buddy", "Golden Retriever");
+        dog.eat(); // Call the inherited method
+        dog.bark(); // Call the method specific to the derived class
+        System.out.println("The dog's breed is " + dog.breed + ".");
+    }
+}
+
+
+Questiuon 3 ( Implement a Java program that uses method overloading to perform different mathematical operations.)
+
+
+class Calculator {
+    // Method to add two integers
+    public int calculate(int a, int b) {
+        return a + b;
+    }
+
+    // Method to multiply two integers
+    public int calculate(int a, int b, String operation) {
+        if (operation.equals("multiply")) {
+            return a * b;
+        }
+        return 0; // Default case (if an unknown operation is passed)
+    }
+
+    // Method to find the power of a number
+    public double calculate(double base, int exponent) {
+        return Math.pow(base, exponent);
+    }
+}
+
+public class MethodOverloadingDemo {
+    public static void main(String[] args) {
+        Calculator calculator = new Calculator();
+
+        // Example 1: Adding two integers
+        int sum = calculator.calculate(5, 10);
+        System.out.println("Sum: " + sum);
+
+        // Example 2: Multiplying two integers
+        int product = calculator.calculate(5, 10, "multiply");
+        System.out.println("Product: " + product);
+
+        // Example 3: Calculating the power of a number
+        double power = calculator.calculate(2.5, 3);
+        System.out.println("Power: " + power);
+    }
+}
+
+Question 4 (Create a custom exception class in Java. Write a program that throws this custom exception in a specific scenario.)
+
+class InvalidAgeException extends Exception {
+    // Constructor with custom message
+    public InvalidAgeException(String message) {
+        super(message); // Call the constructor of the base Exception class
+    }
+}
+
+public class CustomExceptionDemo {
+    // Method that checks if age is valid
+    public static void checkAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Age must be 18 or above to proceed.");
+        }
+        System.out.println("Age " + age + " is valid. You may proceed.");
+    }
+
+    public static void main(String[] args) {
+        try {
+            int age = 16; // Example age
+            checkAge(age); // This will throw the custom exception
+        } catch (InvalidAgeException e) {
+            System.out.println("Exception caught: " + e.getMessage());
+        } finally {
+            System.out.println("Age validation process completed.");
+        }
+    }
+}
+
+Question 5 ( String t is generated by random shuffling string s and then add one more letter at a random position. Return the letter that was added to t.)
+
+public class FindAddedLetter {
+    public static char findTheDifference(String s, String t) {
+        int sumS = 0, sumT = 0;
+
+        // Calculate the ASCII sum of characters in string s
+        for (char c : s.toCharArray()) {
+            sumS += c;
+        }
+
+        // Calculate the ASCII sum of characters in string t
+        for (char c : t.toCharArray()) {
+            sumT += c;
+        }
+
+        // The difference in the sums gives the added character
+        return (char) (sumT - sumS);
+    }
+
+    public static void main(String[] args) {
+        String s = "abcd";
+        String t = "abcde";
+
+        char addedLetter = findTheDifference(s, t);
+        System.out.println("The added letter is: " + addedLetter); // Output: e
+    }
+}
